@@ -86,7 +86,11 @@ class MemeEditorViewController: UIViewController {
         let activityView = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         activityView.completionHandler = {(activityType, completed: Bool) in
             println("Done with activity, completed=\(completed)")
-            let meme = Meme(top: self.topTextButton.text, bottom: self.bottomTextButton.text, source: self.sourceImageView.image!, memed: memedImage)
+            if completed {
+                let meme = Meme(top: self.topTextButton.text, bottom: self.bottomTextButton.text, source: self.sourceImageView.image!, memed: memedImage)
+                self.dismissViewControllerAnimated(true, completion: nil)
+                self.performSegueWithIdentifier("SentMemesSegue", sender: self)
+            }
         }
         
         self.presentViewController(activityView, animated: true, completion: nil)
@@ -156,20 +160,6 @@ class MemeEditorViewController: UIViewController {
             self.view.frame.origin.y += getKeyboardHeight(notification)
         }
     }
-    
-    // MARK: - UIImagePickerControllerDelegate
-    
-//    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-//        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//            self.sourceImageView.image = image
-//            self.shareButton.enabled = true
-//            self.dismissViewControllerAnimated(true, completion: nil)
-//        }
-//    }
-//    
-//    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-//        self.dismissViewControllerAnimated(true, completion: nil)
-//    }
 }
 
 extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
@@ -202,6 +192,7 @@ extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerD
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.sourceImageView.image = image
+            self.shareButton.enabled = true
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }

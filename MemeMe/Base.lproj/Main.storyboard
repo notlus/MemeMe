@@ -60,6 +60,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="QM7-Rd-q5C" firstAttribute="top" secondItem="Rzk-Vw-Gzi" secondAttribute="bottom" constant="-37" id="9NV-Pg-vlI"/>
                             <constraint firstAttribute="bottomMargin" secondItem="QM7-Rd-q5C" secondAttribute="bottom" constant="-7" id="E8u-7L-nKh"/>
@@ -91,7 +92,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="Q6u-mD-kDO">
                             <connections>
                                 <action selector="cancel:" destination="vXZ-lx-hvc" id="ud0-o1-1YH"/>
-                                <segue destination="KSS-6m-D15" kind="show" id="T4Y-YI-YUa"/>
+                                <segue destination="KSS-6m-D15" kind="show" identifier="SentMemesSegue" id="T4Y-YI-YUa"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
