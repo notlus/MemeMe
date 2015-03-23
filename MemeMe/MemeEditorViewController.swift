@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate {
+class MemeEditorViewController: UIViewController {
 
     // MARK: - Outlets
     
@@ -112,6 +112,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         self.bottomTextButton.tag = TextType.Bottom.rawValue
     }
     
+    // TODO: Fix so that it does not include the toolbar and nav bar
     func generateMemedImage() -> UIImage {
         UIGraphicsBeginImageContext(self.view.frame.size)
         self.view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
@@ -158,20 +159,20 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     // MARK: - UIImagePickerControllerDelegate
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.sourceImageView.image = image
-            self.shareButton.enabled = true
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-    }
-    
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
+//    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+//        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//            self.sourceImageView.image = image
+//            self.shareButton.enabled = true
+//            self.dismissViewControllerAnimated(true, completion: nil)
+//        }
+//    }
+//    
+//    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+//        self.dismissViewControllerAnimated(true, completion: nil)
+//    }
 }
 
-extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerDelegate {
+extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     // MARK:  UITextFieldDelegate
 
@@ -196,16 +197,16 @@ extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerD
         return true
     }
     
-//    // MARK: - UIImagePickerControllerDelegate
-//
-//    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-//        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//            self.sourceImageView.image = image
-//            self.dismissViewControllerAnimated(true, completion: nil)
-//        }
-//    }
-//    
-//    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-//        self.dismissViewControllerAnimated(true, completion: nil)
-//    }
+    // MARK: - UIImagePickerControllerDelegate
+
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.sourceImageView.image = image
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }
