@@ -88,6 +88,8 @@ class MemeEditorViewController: UIViewController {
             println("Done with activity, completed=\(completed)")
             if completed {
                 let meme = Meme(top: self.topTextButton.text, bottom: self.bottomTextButton.text, source: self.sourceImageView.image!, memed: memedImage)
+                let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+                appDelegate.memes.append(meme)
                 self.dismissViewControllerAnimated(true, completion: nil)
                 self.performSegueWithIdentifier("SentMemesSegue", sender: self)
             }
