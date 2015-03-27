@@ -20,8 +20,6 @@ class MemeEditorViewController: UIViewController {
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
-//    var memedImage: UIImage?
-    
     // MARK: - Text Field Data
     
     let memeTextAttributes = [
@@ -46,7 +44,6 @@ class MemeEditorViewController: UIViewController {
 
         self.shareButton.enabled = false
         self.cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
-        self.cancelButton.enabled = !appDelegate.memes.isEmpty
         self.initializeTextFields()
     }
     
