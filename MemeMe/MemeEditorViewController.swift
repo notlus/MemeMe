@@ -9,6 +9,7 @@
 import UIKit
 
 class MemeEditorViewController: UIViewController {
+    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
 
     // MARK: - Outlets
     
@@ -17,6 +18,7 @@ class MemeEditorViewController: UIViewController {
     @IBOutlet weak var sourceImageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
 //    var memedImage: UIImage?
     
@@ -44,6 +46,7 @@ class MemeEditorViewController: UIViewController {
 
         self.shareButton.enabled = false
         self.cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+        self.cancelButton.enabled = !appDelegate.memes.isEmpty
         self.initializeTextFields()
     }
     
@@ -88,8 +91,7 @@ class MemeEditorViewController: UIViewController {
             println("Done with activity, completed=\(completed)")
             if completed {
                 let meme = Meme(top: self.topTextButton.text, bottom: self.bottomTextButton.text, source: self.sourceImageView.image!, memed: memedImage)
-                let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-                appDelegate.memes.append(meme)
+                self.appDelegate.memes.append(meme)
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         }

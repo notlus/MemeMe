@@ -5,11 +5,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--MEME Editor-->
+        <!--Meme Editor View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="MemeEditor" title="MEME Editor" id="vXZ-lx-hvc" customClass="MemeEditorViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MemeEditor" id="vXZ-lx-hvc" customClass="MemeEditorViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -42,7 +41,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="RGL-hA-4da"/>
                                 </items>
                             </toolbar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Top" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t82-XG-4e0">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Top" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t82-XG-4e0">
                                 <rect key="frame" x="16" y="92" width="568" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="eBY-oi-qMc"/>
@@ -103,13 +102,15 @@
                     <connections>
                         <outlet property="bottomTextButton" destination="8ol-fj-pX3" id="3H0-jp-Z1i"/>
                         <outlet property="cameraButton" destination="QkN-Rj-pV1" id="adq-kL-4Am"/>
+                        <outlet property="cancelButton" destination="Q6u-mD-kDO" id="JHl-hb-To4"/>
                         <outlet property="shareButton" destination="h72-Td-gbW" id="8fo-oa-q1h"/>
                         <outlet property="sourceImageView" destination="Rzk-Vw-Gzi" id="Sh8-sK-Mqw"/>
                         <outlet property="topTextButton" destination="t82-XG-4e0" id="BCb-Of-deW"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3527" y="836"/>
+            <point key="canvasLocation" x="3557" y="836"/>
         </scene>
         <!--Sent Memes-->
         <scene sceneID="1yf-fO-2V8">
@@ -165,7 +166,9 @@
                             <outlet property="delegate" destination="Naa-GX-MmC" id="5ol-Tf-W4s"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="12C-3x-w8k"/>
+                    <navigationItem key="navigationItem" id="12C-3x-w8k">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="kVf-nX-6aY"/>
+                    </navigationItem>
                     <connections>
                         <segue destination="gq3-it-POg" kind="show" identifier="ShowDetailView" id="Vmf-Tc-q7x"/>
                     </connections>
