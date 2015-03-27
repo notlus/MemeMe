@@ -12,18 +12,28 @@ class SentMemesTableViewController: UITableViewController {
 
     var memes: [Meme]?
     var selectedIndex: Int?
+    let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.contentInset = UIEdgeInsetsMake(64,0,0,0);
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.memes = appDelegate.memes
     }
-
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.tableView.reloadData()
+
+        if self.memes!.isEmpty {
+            // Show the meme editor
+            let memeEditorNav = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditorNav") as UINavigationController
+            self.navigationController!.presentViewController(memeEditorNav, animated: true, completion: nil)
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

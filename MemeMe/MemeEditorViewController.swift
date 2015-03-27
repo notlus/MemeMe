@@ -91,15 +91,14 @@ class MemeEditorViewController: UIViewController {
                 let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
                 appDelegate.memes.append(meme)
                 self.dismissViewControllerAnimated(true, completion: nil)
-                self.performSegueWithIdentifier("SentMemesSegue", sender: self)
             }
         }
         
         self.presentViewController(activityView, animated: true, completion: nil)
     }
     
-    // TODO: Implement
     @IBAction func cancel(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: - Helpers
