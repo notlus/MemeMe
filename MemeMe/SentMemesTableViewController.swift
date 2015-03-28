@@ -10,19 +10,21 @@ import UIKit
 
 class SentMemesTableViewController: UITableViewController {
 
-    var memes: [Meme]?
-    var selectedIndex: Int?
-    let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-    var showMemeEditor = true
+    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    private var memes: [Meme]?
+    private var selectedIndex: Int?
+    private var showMemeEditor = true
+    
+    // MARK: View Management
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // TODO: Try removing
         self.tableView.contentInset = UIEdgeInsetsMake(64,0,0,0);
 
         // Initialize the memes array from the model
         self.memes = appDelegate.memes
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -35,8 +37,7 @@ class SentMemesTableViewController: UITableViewController {
 
         if self.showMemeEditor && self.memes!.isEmpty {
             // Show the meme editor
-            let memeEditorNav = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditorNav") as UINavigationController
-            self.navigationController!.presentViewController(memeEditorNav, animated: true, completion: nil)
+            self.presentMemeEditor(self)
             self.showMemeEditor = false
         }
     }
@@ -44,6 +45,13 @@ class SentMemesTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let detailViewController = segue.destinationViewController as DetailViewController
         detailViewController.memeImage = self.memes![selectedIndex!].memedImage
+    }
+    
+    // MARK: IBActions
+    
+    @IBAction func presentMemeEditor(sender: AnyObject) {
+        let memeEditorNav = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditorNav") as UINavigationController
+        self.navigationController!.presentViewController(memeEditorNav, animated: true, completion: nil)
     }
     
     // MARK: UITableViewDataSource

@@ -11,30 +11,34 @@ import UIKit
 private let reuseIdentifier = "SentMemesCollectionCell"
 
 class SentMemesCollectionViewController: UICollectionViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-
-    var memes: [Meme]?
-    var selectedIndex: Int?
+    
+    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    private var memes: [Meme]?
+    
+    // MARK: View Management
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        
         self.memes = appDelegate.memes
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
     }
 
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-//        let detailViewController = segue.destinationViewController as DetailViewController
-//        detailViewController.memeImage = self.memes![self.selectedIndex!].memedImage
-//    }
-
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.memes = appDelegate.memes
+        self.collectionView?.reloadData()
+    }
+    
+    // MARK: IBActions
+    
+    @IBAction func presentMemeEditor(sender: AnyObject) {
+        let memeEditorNav = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditorNav") as UINavigationController
+        self.navigationController!.presentViewController(memeEditorNav, animated: true, completion: nil)
+    }
+    
     // MARK: UICollectionViewDataSource
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -53,15 +57,8 @@ class SentMemesCollectionViewController: UICollectionViewController, UICollectio
     // MARK: UICollectionViewDelegate
 
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        self.selectedIndex = indexPath.row
-        
         let detailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as DetailViewController
         detailViewController.memeImage = self.memes![indexPath.row].memedImage
         self.navigationController!.pushViewController(detailViewController, animated: true)
-        
-        
-//        self.navigationController?.presentViewController(detailViewController, animated: true, completion: nil)
-        
-//        self.performSegueWithIdentifier("ShowDetailView", sender: self)
     }
 }

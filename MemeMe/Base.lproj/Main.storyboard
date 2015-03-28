@@ -167,7 +167,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="12C-3x-w8k">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="kVf-nX-6aY"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="kVf-nX-6aY">
+                            <connections>
+                                <action selector="presentMemeEditor:" destination="Naa-GX-MmC" id="a1R-Aw-fik"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="gq3-it-POg" kind="show" identifier="ShowDetailView" id="Vmf-Tc-q7x"/>
@@ -270,7 +274,13 @@
                             <outlet property="delegate" destination="p9W-Bc-DkO" id="1pa-At-AtO"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="7Sp-FF-28R"/>
+                    <navigationItem key="navigationItem" id="7Sp-FF-28R">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="YQB-Pi-rtp">
+                            <connections>
+                                <action selector="presentMemeEditor:" destination="p9W-Bc-DkO" id="1dT-Fc-UkN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gqh-q3-GKk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
