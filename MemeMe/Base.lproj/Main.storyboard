@@ -68,6 +68,7 @@
                             <constraint firstItem="QM7-Rd-q5C" firstAttribute="top" secondItem="Rzk-Vw-Gzi" secondAttribute="bottom" constant="-37" id="9NV-Pg-vlI"/>
                             <constraint firstAttribute="bottomMargin" secondItem="QM7-Rd-q5C" secondAttribute="bottom" constant="-7" id="E8u-7L-nKh"/>
                             <constraint firstItem="t82-XG-4e0" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="28" id="FlA-BG-aDj"/>
+                            <constraint firstItem="QM7-Rd-q5C" firstAttribute="top" secondItem="8ol-fj-pX3" secondAttribute="bottom" constant="22" id="ISW-Zg-TOG"/>
                             <constraint firstItem="Rzk-Vw-Gzi" firstAttribute="leading" secondItem="QM7-Rd-q5C" secondAttribute="leading" id="J0P-xc-FJ0"/>
                             <constraint firstItem="Rzk-Vw-Gzi" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="Q7f-Sz-qwr"/>
                             <constraint firstItem="Rzk-Vw-Gzi" firstAttribute="bottom" secondItem="2fi-mo-0CV" secondAttribute="top" id="T8R-nR-p7w"/>
@@ -83,6 +84,7 @@
                             <mask key="constraints">
                                 <exclude reference="9NV-Pg-vlI"/>
                                 <exclude reference="dqh-2y-RSt"/>
+                                <exclude reference="vAU-wf-CX2"/>
                             </mask>
                         </variation>
                     </view>
@@ -103,6 +105,7 @@
                         <outlet property="bottomTextButton" destination="8ol-fj-pX3" id="3H0-jp-Z1i"/>
                         <outlet property="cameraButton" destination="QkN-Rj-pV1" id="adq-kL-4Am"/>
                         <outlet property="cancelButton" destination="Q6u-mD-kDO" id="JHl-hb-To4"/>
+                        <outlet property="memeEditorToolBar" destination="QM7-Rd-q5C" id="xRh-y3-YWA"/>
                         <outlet property="shareButton" destination="h72-Td-gbW" id="8fo-oa-q1h"/>
                         <outlet property="sourceImageView" destination="Rzk-Vw-Gzi" id="Sh8-sK-Mqw"/>
                         <outlet property="topTextButton" destination="t82-XG-4e0" id="BCb-Of-deW"/>
