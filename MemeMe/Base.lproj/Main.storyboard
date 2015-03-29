@@ -199,6 +199,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Sent Memes" id="12C-3x-w8k">
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="hhf-BU-Ft1">
+                            <connections>
+                                <action selector="editMeme:" destination="Naa-GX-MmC" id="7hC-XX-kKk"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="kVf-nX-6aY">
                             <connections>
                                 <action selector="presentMemeEditor:" destination="Naa-GX-MmC" id="a1R-Aw-fik"/>
@@ -206,6 +211,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="editButton" destination="hhf-BU-Ft1" id="5px-cP-jAF"/>
                         <segue destination="gq3-it-POg" kind="show" identifier="ShowDetailView" id="Vmf-Tc-q7x"/>
                     </connections>
                 </tableViewController>
