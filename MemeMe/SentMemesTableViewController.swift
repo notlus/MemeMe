@@ -20,9 +20,6 @@ class SentMemesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // TODO: Try removing
-        self.tableView.contentInset = UIEdgeInsetsMake(64,0,0,0);
-
         // Initialize the memes array from the model
         self.memes = appDelegate.memes
     }
@@ -60,11 +57,15 @@ class SentMemesTableViewController: UITableViewController {
         return self.memes!.count
     }
     
+//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        return 88.0
+//    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("SentMemesCell") as UITableViewCell
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("SentMemesCell") as SentMemesTableViewCell
         var meme = self.memes![indexPath.row]
-        cell.textLabel!.text = meme.topText
-        cell.imageView!.image = meme.memedImage
+        cell.memeImageView!.image = meme.memedImage
+        cell.memeLabel.text = meme.topText
         return cell
     }
     
