@@ -112,10 +112,10 @@
             </objects>
             <point key="canvasLocation" x="3557" y="836"/>
         </scene>
-        <!--Sent Memes-->
+        <!--Tab Bar Controller-->
         <scene sceneID="1yf-fO-2V8">
             <objects>
-                <tabBarController title="Sent Memes" automaticallyAdjustsScrollViewInsets="NO" id="KSS-6m-D15" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="KSS-6m-D15" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="vU0-aD-5Z3">
@@ -131,7 +131,7 @@
             </objects>
             <point key="canvasLocation" x="560" y="398"/>
         </scene>
-        <!--Sent Memes Table View Controller-->
+        <!--Sent Memes-->
         <scene sceneID="HHz-aO-EL1">
             <objects>
                 <tableViewController id="Naa-GX-MmC" customClass="SentMemesTableViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -166,7 +166,7 @@
                             <outlet property="delegate" destination="Naa-GX-MmC" id="5ol-Tf-W4s"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="12C-3x-w8k">
+                    <navigationItem key="navigationItem" title="Sent Memes" id="12C-3x-w8k">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="kVf-nX-6aY">
                             <connections>
                                 <action selector="presentMemeEditor:" destination="Naa-GX-MmC" id="a1R-Aw-fik"/>
@@ -230,7 +230,7 @@
             </objects>
             <point key="canvasLocation" x="2867" y="131"/>
         </scene>
-        <!--Sent Memes Collection View Controller-->
+        <!--Sent Memes-->
         <scene sceneID="J0J-Kr-iNh">
             <objects>
                 <collectionViewController id="p9W-Bc-DkO" customClass="SentMemesCollectionViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -274,7 +274,7 @@
                             <outlet property="delegate" destination="p9W-Bc-DkO" id="1pa-At-AtO"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="7Sp-FF-28R">
+                    <navigationItem key="navigationItem" title="Sent Memes" id="7Sp-FF-28R">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="YQB-Pi-rtp">
                             <connections>
                                 <action selector="presentMemeEditor:" destination="p9W-Bc-DkO" id="1dT-Fc-UkN"/>
