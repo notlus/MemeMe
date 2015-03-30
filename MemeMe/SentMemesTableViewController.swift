@@ -34,11 +34,6 @@ class SentMemesTableViewController: UITableViewController {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let detailViewController = segue.destinationViewController as DetailViewController
-        detailViewController.memeImage = appDelegate.memes[selectedIndex!].memedImage
-    }
-    
     // MARK: IBActions
     
     @IBAction func presentMemeEditor(sender: AnyObject) {
@@ -89,6 +84,13 @@ class SentMemesTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("selected row \(indexPath.row)")
         self.selectedIndex = indexPath.row
-        self.performSegueWithIdentifier("ShowDetailView", sender: self)
+        
+        // Create the detail view controller
+        let detailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as DetailViewController
+        
+        // Set the index of the selected table view entry
+        detailViewController.memeIndex = indexPath.row
+        
+        self.navigationController!.pushViewController(detailViewController, animated: true)
     }
 }

@@ -57,8 +57,11 @@ class SentMemesCollectionViewController: UICollectionViewController, UICollectio
     // MARK: UICollectionViewDelegate
 
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        // Create the detail view controller
         let detailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as DetailViewController
-        detailViewController.memeImage = self.memes![indexPath.row].memedImage
+
+        // Set the index of the selected table view entry
+        detailViewController.memeIndex = indexPath.row
         self.navigationController!.pushViewController(detailViewController, animated: true)
     }
 }

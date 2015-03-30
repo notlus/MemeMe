@@ -215,7 +215,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="editButton" destination="hhf-BU-Ft1" id="5px-cP-jAF"/>
-                        <segue destination="gq3-it-POg" kind="show" identifier="ShowDetailView" id="Vmf-Tc-q7x"/>
+                        <segue destination="nvF-g6-2px" kind="show" identifier="ShowDetailView" id="Vmf-Tc-q7x"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QN8-gP-4SF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -263,13 +263,22 @@
                             <constraint firstAttribute="bottomMargin" secondItem="K06-4N-hlk" secondAttribute="bottom" id="zIx-DW-glT"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="6gF-YO-GDZ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="MAf-Yk-dP0">
+                            <connections>
+                                <action selector="deleteMeme:" destination="gq3-it-POg" id="rpE-Ty-fST"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="imageView" destination="K06-4N-hlk" id="tDi-8t-x2W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pes-fP-OrB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2867" y="131"/>
+            <point key="canvasLocation" x="3557" y="131"/>
         </scene>
         <!--Sent Memes-->
         <scene sceneID="J0J-Kr-iNh">
@@ -363,6 +372,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C0P-gZ-Es4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2872" y="836"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="j6B-wZ-Km0">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nvF-g6-2px" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vB2-w7-f8h">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="gq3-it-POg" kind="relationship" relationship="rootViewController" id="b1u-it-2S9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ugi-Sg-tas" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2867" y="131"/>
         </scene>
     </scenes>
     <resources>

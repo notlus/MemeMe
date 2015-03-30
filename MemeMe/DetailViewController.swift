@@ -9,25 +9,24 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var memeImage: UIImage?
+    
+    // Index in the model of the meme this view controller should display. This is set by the 
+    // sending view controller
+    var memeIndex = 0
+    
+    // The meme model is in the app delegate
+    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.imageView.image = memeImage!
+        // Get the image for the selected meme from the model
+        self.imageView.image = self.appDelegate.memes[self.memeIndex].memedImage
     }
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func deleteMeme(sender: AnyObject) {
+        self.appDelegate.memes.removeAtIndex(self.memeIndex)
+        self.navigationController?.popViewControllerAnimated(true)
     }
-    */
-
 }
