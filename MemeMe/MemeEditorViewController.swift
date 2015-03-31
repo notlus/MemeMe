@@ -11,6 +11,8 @@ import UIKit
 class MemeEditorViewController: UIViewController {
     private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
 
+    var memeIndex: Int?
+    
     // MARK: - Outlets
     
     @IBOutlet weak var topTextButton: UITextField!
@@ -23,15 +25,15 @@ class MemeEditorViewController: UIViewController {
     
     // MARK: - Text Field Data
     
-    let memeTextAttributes = [
+    private let memeTextAttributes = [
         NSStrokeColorAttributeName : UIColor.blackColor(),
         NSForegroundColorAttributeName : UIColor.whiteColor(),
         NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSStrokeWidthAttributeName : -5.0
     ]
     
-    let topDefaultText = "TOP"
-    let bottomDefaultText = "BOTTOM"
+    private let topDefaultText = "TOP"
+    private let bottomDefaultText = "BOTTOM"
     
     enum TextType: Int {
         case Top = 0
@@ -89,7 +91,14 @@ class MemeEditorViewController: UIViewController {
             println("Done with activity, completed=\(completed)")
             if completed {
                 let meme = Meme(top: self.topTextButton.text, bottom: self.bottomTextButton.text, source: self.sourceImageView.image!, memed: memedImage)
-                self.appDelegate.memes.append(meme)
+                if let index = self.memeIndex {
+                    // Replace an existing meme at index
+                    self.appDelegate.memes[index] = meme
+                }
+                else {
+                    // Create a new meme
+                    self.appDelegate.memes.append(meme)
+                }
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
@@ -104,20 +113,26 @@ class MemeEditorViewController: UIViewController {
     // MARK: - Helpers
     
     func initializeTextFields() {
-        self.topTextButton.text = self.topDefaultText
         self.topTextButton.delegate = self
         self.topTextButton.defaultTextAttributes = self.memeTextAttributes
         self.topTextButton.textAlignment = NSTextAlignment.Center
         self.topTextButton.tag = TextType.Top.rawValue
 
-        self.bottomTextButton.text = self.bottomDefaultText
         self.bottomTextButton.delegate = self
         self.bottomTextButton.defaultTextAttributes = self.memeTextAttributes
         self.bottomTextButton.textAlignment = NSTextAlignment.Center
         self.bottomTextButton.tag = TextType.Bottom.rawValue
+        if let index = self.memeIndex {
+            self.topTextButton.text = self.appDelegate.memes[index].topText
+            self.bottomTextButton.text = self.appDelegate.memes[index].bottomText
+            self.sourceImageView.image = self.appDelegate.memes[index].sourceImage
+        }
+        else {
+            self.topTextButton.text = self.topDefaultText
+            self.bottomTextButton.text = self.bottomDefaultText
+        }
     }
     
-    // TODO: Fix so that it does not include the toolbar and nav bar
     func generateMemedImage() -> UIImage {
         // Hide the navigation bar and bottom toolbar before capturing the image
         self.navigationController?.navigationBar.hidden = true
@@ -187,6 +202,21 @@ extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerD
             }
             else if textField.tag == TextType.Bottom.rawValue {
                 textField.text = bottomDefaultText
+            }
+        }
+        else {
+            var tempText: String!
+            if textField.tag == TextType.Top.rawValue {
+                tempText = self.topDefaultText
+            }
+            else {
+                tempText = self.bottomDefaultText
+            }
+            
+            // If the text is different from the default and an image was chosen, enable the
+            // share button
+            if textField.text != tempText && self.sourceImageView.image != nil {
+                self.shareButton.enabled = true
             }
         }
     }
