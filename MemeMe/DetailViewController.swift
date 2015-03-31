@@ -21,10 +21,27 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Create the edit button
+        let editButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editMeme")
+        var rightButtons = self.navigationItem.rightBarButtonItems! as [UIBarButtonItem]
+        rightButtons.append(editButton)
+        self.navigationItem.rightBarButtonItems = rightButtons
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         // Get the image for the selected meme from the model
         self.imageView.image = self.appDelegate.memes[self.memeIndex].memedImage
     }
 
+    func editMeme() {
+        let memeEditorNav = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditorNav") as UINavigationController
+        
+        // The meme editor is the root view controller
+        let memeEditor = memeEditorNav.viewControllers.first as MemeEditorViewController
+        memeEditor.memeIndex = self.memeIndex
+        self.navigationController?.presentViewController(memeEditorNav, animated: true, completion: nil)
+    }
+    
     @IBAction func deleteMeme(sender: AnyObject) {
         self.appDelegate.memes.removeAtIndex(self.memeIndex)
         self.navigationController?.popViewControllerAnimated(true)
