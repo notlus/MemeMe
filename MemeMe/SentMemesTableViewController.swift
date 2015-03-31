@@ -22,6 +22,7 @@ class SentMemesTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.editButton.enabled = !appDelegate.memes.isEmpty
+        self.tableView?.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
