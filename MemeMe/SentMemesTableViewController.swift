@@ -38,8 +38,8 @@ class SentMemesTableViewController: UITableViewController {
     // MARK: IBActions
     
     @IBAction func presentMemeEditor(sender: AnyObject) {
-        let memeEditorNav = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditorNav") as UINavigationController
-        self.navigationController!.presentViewController(memeEditorNav, animated: true, completion: nil)
+        let memeEditor = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as MemeEditorViewController
+        self.navigationController!.presentViewController(memeEditor, animated: true, completion: nil)
     }
     
     @IBAction func editMeme(sender: AnyObject) {

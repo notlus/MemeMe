@@ -51,11 +51,13 @@ class MemeEditorViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        println("viewWillAppear")
         super.viewWillAppear(animated)
         self.subscribeToKeyboardNotifications()
     }
     
     override func viewWillDisappear(animated: Bool) {
+        println("viewWillDisappear")
         super.viewWillDisappear(animated)
         self.unsubscribeFromKeyboardNotifications()
     }
@@ -122,6 +124,7 @@ class MemeEditorViewController: UIViewController {
         self.bottomTextButton.defaultTextAttributes = self.memeTextAttributes
         self.bottomTextButton.textAlignment = NSTextAlignment.Center
         self.bottomTextButton.tag = TextType.Bottom.rawValue
+        
         if let index = self.memeIndex {
             self.topTextButton.text = self.appDelegate.memes[index].topText
             self.bottomTextButton.text = self.appDelegate.memes[index].bottomText
@@ -172,16 +175,26 @@ class MemeEditorViewController: UIViewController {
     func keyboardWillShow(notification: NSNotification) {
         if self.bottomTextButton.isFirstResponder() {
             println("willShow....")
-            // Subtract the height of the keyboard from the y-coordinate of the view
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
+            println("view height = \(self.view.frame.origin.y)")
+            println("keyboard height = \(getKeyboardHeight(notification))")
+            
+            if self.view.frame.origin.y == 0 {
+                // Subtract the height of the keyboard from the y-coordinate of the view
+                self.view.frame.origin.y -= getKeyboardHeight(notification)
+            }
         }
     }
     
     func keyboardWillHide(notification: NSNotification) {
         if self.bottomTextButton.isFirstResponder() {
             println("willHide....")
-            // Add the height of the keyboard to the y-coordinate of the view
-            self.view.frame.origin.y += getKeyboardHeight(notification)
+            println("view height = \(self.view.frame.origin.y)")
+            println("keyboard height = \(getKeyboardHeight(notification))")
+            
+            if self.view.frame.origin.y < 0 {
+                // Add the height of the keyboard to the y-coordinate of the view
+                self.view.frame.origin.y += getKeyboardHeight(notification)
+            }
         }
     }
 }
