@@ -21,6 +21,7 @@ class MemeEditorViewController: UIViewController {
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var topToolBar: UIToolbar!
     @IBOutlet weak var memeEditorToolBar: UIToolbar!
     
     // MARK: - Text Field Data
@@ -137,8 +138,8 @@ class MemeEditorViewController: UIViewController {
     }
     
     func generateMemedImage() -> UIImage {
-        // Hide the navigation bar and bottom toolbar before capturing the image
-        self.navigationController?.navigationBar.hidden = true
+        // Hide the top and bottom toolbars before capturing the image
+        self.topToolBar.hidden = true
         self.memeEditorToolBar.hidden = true
         
         UIGraphicsBeginImageContext(self.view.frame.size)
@@ -149,6 +150,7 @@ class MemeEditorViewController: UIViewController {
         
         // Show the navigation bar and bottom toolbar again
         self.navigationController?.navigationBar.hidden = false
+        self.topToolBar.hidden = false
         self.memeEditorToolBar.hidden = false
         
         return memedImage

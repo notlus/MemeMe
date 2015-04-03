@@ -115,6 +115,7 @@
                         <outlet property="shareButton" destination="Zbb-Qk-dVd" id="aXh-1D-26g"/>
                         <outlet property="sourceImageView" destination="Rzk-Vw-Gzi" id="Sh8-sK-Mqw"/>
                         <outlet property="topTextButton" destination="t82-XG-4e0" id="BCb-Of-deW"/>
+                        <outlet property="topToolBar" destination="nHy-Vz-ld9" id="aXb-0g-QSw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
