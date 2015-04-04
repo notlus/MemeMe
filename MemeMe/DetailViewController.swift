@@ -34,12 +34,10 @@ class DetailViewController: UIViewController {
     }
 
     func editMeme() {
-        let memeEditorNav = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditorNav") as UINavigationController
+        let memeEditor = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as MemeEditorViewController
         
-        // The meme editor is the root view controller
-        let memeEditor = memeEditorNav.viewControllers.first as MemeEditorViewController
         memeEditor.memeIndex = self.memeIndex
-        self.navigationController?.presentViewController(memeEditorNav, animated: true, completion: nil)
+        self.navigationController?.presentViewController(memeEditor, animated: true, completion: nil)
     }
     
     @IBAction func deleteMeme(sender: AnyObject) {
