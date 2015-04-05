@@ -43,9 +43,9 @@ class SentMemesTableViewController: UITableViewController {
     }
     
     @IBAction func editMeme(sender: AnyObject) {
-        self.editing = !self.editing
-        
-        if editing {
+        self.setEditing(!self.editing, animated: true)
+
+        if self.editing {
             self.editButton.title = "Cancel"
         }
         else {
@@ -69,7 +69,6 @@ class SentMemesTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        println("commitEditingStyle")
         appDelegate.memes.removeAtIndex(indexPath.row)
         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         
