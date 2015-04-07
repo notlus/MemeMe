@@ -15,10 +15,4 @@ class SentMemesCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         selected = false
     }
-    
-    override var selected: Bool {
-        didSet {
-            self.backgroundColor = selected ? UIColor.redColor() : UIColor.blackColor()
-        }
-    }
 }
