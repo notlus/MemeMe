@@ -13,6 +13,7 @@ private let reuseIdentifier = "SentMemesCollectionCell"
 class SentMemesCollectionViewController:
 UICollectionViewController,
 UICollectionViewDelegateFlowLayout {
+    
     // MARK: Outlets
     
     @IBOutlet weak var editButton: UIBarButtonItem!
@@ -21,16 +22,13 @@ UICollectionViewDelegateFlowLayout {
     private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
     
     // An array to hold the indices of memes that should be deleted
-    private var deletionIndices = [NSIndexPath]()
+    private var deletionIndices = [Meme]()
     
     private var editMode: Bool = false {
         didSet {
             println("editMode = \(editMode)")
             collectionView?.allowsMultipleSelection = editMode
             collectionView?.selectItemAtIndexPath(nil, animated: true, scrollPosition: .None)
-            
-            // Clear out any previous data
-            deletionIndices.removeAll(keepCapacity: false)
         }
     }
     
@@ -64,19 +62,29 @@ UICollectionViewDelegateFlowLayout {
         
         self.editMode = !self.editMode
         
-        if !deletionIndices.isEmpty {
-            // Delete these entries
-            println("Deleting memes...")
-            
-            collectionView?.reloadData()
-        }
-        
         if self.editMode {
             self.editButton.title = "Delete"
             self.addButton.enabled = false
-//            collectionView?.allowsMultipleSelection = true
         }
         else {
+            if !deletionIndices.isEmpty {
+                // Delete these entries
+                println("Deleting memes...")
+
+                // Remove memes that should be deleted
+                self.appDelegate.memes = self.appDelegate.memes.filter({ (meme: Meme) -> Bool in
+                    if let i = find(self.deletionIndices, meme) {
+                        return false
+                    }
+                    
+                    return true
+                })
+                
+                deletionIndices.removeAll(keepCapacity: false)
+
+                collectionView?.reloadData()
+            }
+
             self.editButton.title = "Edit"
             self.addButton.enabled = true
         }
@@ -93,33 +101,24 @@ UICollectionViewDelegateFlowLayout {
     
         // Configure the cell
         cell.memeImageView.image = self.appDelegate.memes[indexPath.row].memedImage
+        collectionView.selectItemAtIndexPath(indexPath, animated: true, scrollPosition: nil)
         
-//        if editMode {
-//            cell.backgroundColor = UIColor.redColor()
-//        }
-//        else {
-//            cell.backgroundColor = UIColor.blackColor()
-//        }
-        
-//        cell.selected = true;
+        if editMode {
+            cell.backgroundColor = UIColor.redColor()
+        }
+        else {
+            cell.backgroundColor = UIColor.blackColor()
+        }
         
         return cell
     }
 
     // MARK: UICollectionViewDelegate
     
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-
-    override func collectionView(collectionView: UICollectionView, shouldDeselectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if editMode {
-            // Add the index path to the array of memes to delete
-            deletionIndices.append(indexPath)
+            // Add the meme at `indexPath` to the array of memes to delete
+            deletionIndices.append(self.appDelegate.memes[indexPath.row])
             println("Added index \(indexPath.row) to memes to delete, count=\(countElements(deletionIndices))")
             collectionView.reloadItemsAtIndexPaths([indexPath])
         }
@@ -133,15 +132,18 @@ UICollectionViewDelegateFlowLayout {
         }
     }
     
-//    override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
     override func collectionView(collectionView: UICollectionView,
         didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         if editMode {
             // Remove the index path from the array of memes to delete
-            if let findIndex = find(deletionIndices, indexPath) {
+            if let findIndex = find(deletionIndices, self.appDelegate.memes[indexPath.row]) {
                 println("Removing index \(indexPath.row) from memes to delete")
                 deletionIndices.removeAtIndex(findIndex)
             }
+            
+            // Change the cell view back to the unselected state
+            let cell = collectionView.cellForItemAtIndexPath(indexPath)
+            cell?.backgroundColor = UIColor.blackColor()
         }
     }
     
