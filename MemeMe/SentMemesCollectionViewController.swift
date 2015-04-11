@@ -109,21 +109,6 @@ SentMemesCollectionCellDelegate {
         self.navigationController!.pushViewController(detailViewController, animated: true)
     }
     
-    override func collectionView(collectionView: UICollectionView,
-        didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        if editMode {
-            // Remove the index path from the array of memes to delete
-            if let findIndex = find(deletionIndices, self.appDelegate.memes[indexPath.row]) {
-                println("Removing index \(indexPath.row) from memes to delete")
-                deletionIndices.removeAtIndex(findIndex)
-            }
-            
-            // Change the cell view back to the unselected state
-            let cell = collectionView.cellForItemAtIndexPath(indexPath)
-            cell?.backgroundColor = UIColor.blackColor()
-        }
-    }
-    
     // MARK: UICollectionViewDelegateFlowLayout
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {

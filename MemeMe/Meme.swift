@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Meme: Equatable {
+struct Meme {
     var topText: String
     var bottomText: String
     var sourceImage: UIImage
@@ -20,9 +20,4 @@ class Meme: Equatable {
         self.sourceImage = sourceImage
         self.memedImage = memedImage
     }
-}
-
-/// A global `==` operator to determine whether two `Meme` instances refer to the same object
-func ==(lhs: Meme, rhs: Meme) -> Bool {
-    return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
 }
