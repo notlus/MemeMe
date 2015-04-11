@@ -12,7 +12,8 @@ private let reuseIdentifier = "SentMemesCollectionCell"
 
 class SentMemesCollectionViewController:
 UICollectionViewController,
-UICollectionViewDelegateFlowLayout {
+UICollectionViewDelegateFlowLayout,
+SentMemesCollectionCellDelegate {
     
     // MARK: Outlets
     
@@ -56,37 +57,26 @@ UICollectionViewDelegateFlowLayout {
     }
     
     @IBAction func editMeme(sender: AnyObject) {
-        if appDelegate.memes.isEmpty {
-            return
-        }
         
-        self.editMode = !self.editMode
+        editMode = !editMode
         
+        toggleDeleteButton(editMode)
+
         if self.editMode {
-            self.editButton.title = "Delete"
-            self.addButton.enabled = false
+            editButton.title = "Done"
+            addButton.enabled = false
         }
         else {
-            if !deletionIndices.isEmpty {
-                // Delete these entries
-                println("Deleting memes...")
-
-                // Remove memes that should be deleted
-                self.appDelegate.memes = self.appDelegate.memes.filter({ (meme: Meme) -> Bool in
-                    if let i = find(self.deletionIndices, meme) {
-                        return false
-                    }
-                    
-                    return true
-                })
-                
-                deletionIndices.removeAll(keepCapacity: false)
-
-                collectionView?.reloadData()
-            }
-
             self.editButton.title = "Edit"
             self.addButton.enabled = true
+        }
+    }
+    
+    private func toggleDeleteButton(show: Bool) {
+        for var i = 0; i < appDelegate.memes.count; ++i {
+            let indexPath = NSIndexPath(forRow: i, inSection: 0)
+            let cell = collectionView?.cellForItemAtIndexPath(indexPath) as SentMemesCollectionViewCell
+            cell.deleteButton.hidden = !show
         }
     }
     
@@ -101,35 +91,22 @@ UICollectionViewDelegateFlowLayout {
     
         // Configure the cell
         cell.memeImageView.image = self.appDelegate.memes[indexPath.row].memedImage
-        collectionView.selectItemAtIndexPath(indexPath, animated: true, scrollPosition: nil)
-        
-        if editMode {
-            cell.backgroundColor = UIColor.redColor()
-        }
-        else {
-            cell.backgroundColor = UIColor.blackColor()
-        }
-        
+        cell.index = indexPath.row
+        cell.delegate = self
+        cell.deleteButton.hidden = editMode ? false : true
+       
         return cell
     }
 
     // MARK: UICollectionViewDelegate
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if editMode {
-            // Add the meme at `indexPath` to the array of memes to delete
-            deletionIndices.append(self.appDelegate.memes[indexPath.row])
-            println("Added index \(indexPath.row) to memes to delete, count=\(countElements(deletionIndices))")
-            collectionView.reloadItemsAtIndexPaths([indexPath])
-        }
-        else {
-            // Create the detail view controller
-            let detailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as DetailViewController
+        // Create the detail view controller
+        let detailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as DetailViewController
 
-            // Set the index of the selected table view entry
-            detailViewController.memeIndex = indexPath.row
-            self.navigationController!.pushViewController(detailViewController, animated: true)
-        }
+        // Set the index of the selected table view entry
+        detailViewController.memeIndex = indexPath.row
+        self.navigationController!.pushViewController(detailViewController, animated: true)
     }
     
     override func collectionView(collectionView: UICollectionView,
@@ -157,5 +134,16 @@ UICollectionViewDelegateFlowLayout {
     private let insets = UIEdgeInsets(top: 20, left: 5, bottom: 20, right: 5)
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return insets
+    }
+    
+    // MARK: SentMemesCollectionCellDelegate
+    
+    func deleteMemeForCell(cell: SentMemesCollectionViewCell) {
+        // Get the index path for the cell provided
+        if let indexPath = collectionView?.indexPathForCell(cell) {
+            println("Deleting meme at index \(indexPath.row)")
+            appDelegate.memes.removeAtIndex(indexPath.row)
+            collectionView?.reloadData()
+        }
     }
 }
