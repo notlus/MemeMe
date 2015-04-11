@@ -98,9 +98,7 @@
 				37EA1E911AC13F2400F93363 /* DetailViewController.swift */,
 				371F00CF1ABF7625003C43AB /* Main.storyboard */,
 				378803BF1ABFE8AF00DCF1D7 /* Meme.swift */,
-				37A5EC031ACFC814001D6843 /* Impact.ttf */,
 				371F00D21ABF7625003C43AB /* Images.xcassets */,
-				371F00D41ABF7625003C43AB /* LaunchScreen.xib */,
 				371F00C91ABF7625003C43AB /* Supporting Files */,
 				37DEB03C1AC28E3200A147A5 /* SentMemesCollectionViewCell.swift */,
 				3723942C1AC7956D00819A83 /* SentMemesTableViewCell.swift */,
@@ -111,6 +109,8 @@
 		371F00C91ABF7625003C43AB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				371F00D41ABF7625003C43AB /* LaunchScreen.xib */,
+				37A5EC031ACFC814001D6843 /* Impact.ttf */,
 				371F00CA1ABF7625003C43AB /* Info.plist */,
 			);
 			name = "Supporting Files";
