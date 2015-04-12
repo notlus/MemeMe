@@ -8,16 +8,18 @@
 
 import UIKit
 
+/// Protocol that defines a function that can be used to delete a cell from the 
+/// SentMemesCollectionViewController
 protocol SentMemesCollectionCellDelegate {
     func deleteMemeForCell(cell: SentMemesCollectionViewCell)
 }
 
+/// Represents a cell in the SentMemesCollectionViewController
 class SentMemesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var memeImageView: UIImageView!
     @IBOutlet weak var deleteButton: UIButton!
     
-    var index: Int?
-    
+    /// Optional SentMemesCollectionCellDelegate
     var delegate: SentMemesCollectionCellDelegate?
     
     override func awakeFromNib() {

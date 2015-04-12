@@ -91,7 +91,6 @@ SentMemesCollectionCellDelegate {
     
         // Configure the cell
         cell.memeImageView.image = self.appDelegate.memes[indexPath.row].memedImage
-        cell.index = indexPath.row
         cell.delegate = self
         cell.deleteButton.hidden = editMode ? false : true
        

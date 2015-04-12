@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Represents a cell in the SentMemesTableViewController
 class SentMemesTableViewCell: UITableViewCell {
 
     @IBOutlet weak var memeImageView: UIImageView!
@@ -16,13 +17,9 @@ class SentMemesTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
-
 }

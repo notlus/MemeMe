@@ -21,35 +21,35 @@ class SentMemesTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.editButton.enabled = !appDelegate.memes.isEmpty
-        self.tableView?.reloadData()
+        editButton.enabled = !appDelegate.memes.isEmpty
+        tableView?.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
-        if self.showMemeEditor && appDelegate.memes.isEmpty {
+        if showMemeEditor && appDelegate.memes.isEmpty {
             // Show the meme editor
-            self.presentMemeEditor(self)
-            self.showMemeEditor = false
+            presentMemeEditor(self)
+            showMemeEditor = false
         }
     }
     
     // MARK: IBActions
     
     @IBAction func presentMemeEditor(sender: AnyObject) {
-        let memeEditor = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as MemeEditorViewController
-        self.navigationController!.presentViewController(memeEditor, animated: true, completion: nil)
+        let memeEditor = storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as MemeEditorViewController
+        navigationController!.presentViewController(memeEditor, animated: true, completion: nil)
     }
     
     @IBAction func editMeme(sender: AnyObject) {
-        self.setEditing(!self.editing, animated: true)
+        setEditing(!editing, animated: true)
 
-        if self.editing {
-            self.editButton.title = "Cancel"
+        if editing {
+            editButton.title = "Cancel"
         }
         else {
-            self.editButton.title = "Edit"
+            editButton.title = "Edit"
         }
     }
     
@@ -60,7 +60,7 @@ class SentMemesTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("SentMemesCell") as SentMemesTableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("SentMemesCell") as SentMemesTableViewCell
         var meme = appDelegate.memes[indexPath.row]
         cell.memeImageView!.image = meme.memedImage
         cell.topMemeLabel.text = meme.topText
@@ -73,25 +73,25 @@ class SentMemesTableViewController: UITableViewController {
         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         
         // No longer in editing mode
-        self.setEditing(false, animated: true)
+        setEditing(false, animated: true)
         
         // Restore the edit button
-        self.editButton.title = "Edit"
-        self.editButton.enabled = !self.appDelegate.memes.isEmpty
+        editButton.title = "Edit"
+        editButton.enabled = !appDelegate.memes.isEmpty
     }
     
     // MARK: UITableViewDelegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("selected row \(indexPath.row)")
-        self.selectedIndex = indexPath.row
+        selectedIndex = indexPath.row
         
         // Create the detail view controller
-        let detailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as DetailViewController
+        let detailViewController = storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as DetailViewController
         
         // Set the index of the selected table view entry
         detailViewController.memeIndex = indexPath.row
         
-        self.navigationController!.pushViewController(detailViewController, animated: true)
+        navigationController!.pushViewController(detailViewController, animated: true)
     }
 }

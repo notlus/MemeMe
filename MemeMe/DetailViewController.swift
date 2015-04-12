@@ -11,11 +11,11 @@ import UIKit
 class DetailViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
-    // Index in the model of the meme this view controller should display. This is set by the 
-    // sending view controller
+    /// Index in the model of the meme this view controller should display. This is set by the
+    /// sending view controller
     var memeIndex = 0
     
-    // The meme model is in the app delegate
+    /// The meme model is in the app delegate
     private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
     
     override func viewDidLoad() {
@@ -23,25 +23,25 @@ class DetailViewController: UIViewController {
 
         // Create the edit button
         let editButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editMeme")
-        var rightButtons = self.navigationItem.rightBarButtonItems! as [UIBarButtonItem]
+        var rightButtons = navigationItem.rightBarButtonItems! as [UIBarButtonItem]
         rightButtons.append(editButton)
-        self.navigationItem.rightBarButtonItems = rightButtons
+        navigationItem.rightBarButtonItems = rightButtons
     }
     
     override func viewWillAppear(animated: Bool) {
         // Get the image for the selected meme from the model
-        self.imageView.image = self.appDelegate.memes[self.memeIndex].memedImage
+        imageView.image = appDelegate.memes[memeIndex].memedImage
     }
 
     func editMeme() {
-        let memeEditor = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as MemeEditorViewController
+        let memeEditor = storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as MemeEditorViewController
         
-        memeEditor.memeIndex = self.memeIndex
-        self.navigationController?.presentViewController(memeEditor, animated: true, completion: nil)
+        memeEditor.memeIndex = memeIndex
+        navigationController?.presentViewController(memeEditor, animated: true, completion: nil)
     }
     
     @IBAction func deleteMeme(sender: AnyObject) {
-        self.appDelegate.memes.removeAtIndex(self.memeIndex)
-        self.navigationController?.popViewControllerAnimated(true)
+        appDelegate.memes.removeAtIndex(memeIndex)
+        navigationController?.popViewControllerAnimated(true)
     }
 }

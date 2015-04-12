@@ -125,7 +125,7 @@ class MemeEditorViewController: UIViewController {
     
     // MARK: - Helpers
     
-    func initializeTextFields() {
+    private func initializeTextFields() {
         topTextButton.delegate = self
         topTextButton.defaultTextAttributes = memeTextAttributes
         topTextButton.textAlignment = NSTextAlignment.Center
@@ -147,7 +147,8 @@ class MemeEditorViewController: UIViewController {
         }
     }
     
-    func generateMemedImage() -> UIImage {
+    /// Generates a `UIImage` containing the top and bottom meme text
+    private func generateMemedImage() -> UIImage {
         // Hide the top and bottom toolbars before capturing the image
         topToolBar.hidden = true
         memeEditorToolBar.hidden = true
@@ -166,19 +167,19 @@ class MemeEditorViewController: UIViewController {
         return memedImage
     }
 
-    func subscribeToKeyboardNotifications() {
+    private func subscribeToKeyboardNotifications() {
         println("subscribeToKeyboardNotifications")
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    func unsubscribeFromKeyboardNotifications() {
+    private func unsubscribeFromKeyboardNotifications() {
         println("unsubscribeFromKeyboardNotifications")
         NSNotificationCenter.defaultCenter().removeObserver(UIKeyboardWillShowNotification)
         NSNotificationCenter.defaultCenter().removeObserver(UIKeyboardWillHideNotification)
     }
     
-    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+    private func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         let userInfo = notification.userInfo
         let value = userInfo![UIKeyboardFrameEndUserInfoKey] as NSValue
         return value.CGRectValue().size.height
@@ -186,10 +187,6 @@ class MemeEditorViewController: UIViewController {
     
     func keyboardWillShow(notification: NSNotification) {
         if bottomTextButton.isFirstResponder() {
-            println("willShow....")
-            println("view height = \(view.frame.origin.y)")
-            println("keyboard height = \(getKeyboardHeight(notification))")
-            
             if view.frame.origin.y == 0 {
                 // Subtract the height of the keyboard from the y-coordinate of the view
                 view.frame.origin.y -= getKeyboardHeight(notification)
@@ -199,10 +196,6 @@ class MemeEditorViewController: UIViewController {
     
     func keyboardWillHide(notification: NSNotification) {
         if bottomTextButton.isFirstResponder() {
-            println("willHide....")
-            println("view height = \(view.frame.origin.y)")
-            println("keyboard height = \(getKeyboardHeight(notification))")
-            
             if view.frame.origin.y < 0 {
                 // Add the height of the keyboard to the y-coordinate of the view
                 view.frame.origin.y += getKeyboardHeight(notification)
@@ -211,6 +204,7 @@ class MemeEditorViewController: UIViewController {
     }
 }
 
+/// Extension to `MemeEditorViewController` that implements some delegate functions
 extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     // MARK:  UITextFieldDelegate
