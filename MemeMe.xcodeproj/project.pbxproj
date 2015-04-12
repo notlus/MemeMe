@@ -98,10 +98,10 @@
 				37EA1E911AC13F2400F93363 /* DetailViewController.swift */,
 				371F00CF1ABF7625003C43AB /* Main.storyboard */,
 				378803BF1ABFE8AF00DCF1D7 /* Meme.swift */,
-				371F00D21ABF7625003C43AB /* Images.xcassets */,
-				371F00C91ABF7625003C43AB /* Supporting Files */,
 				37DEB03C1AC28E3200A147A5 /* SentMemesCollectionViewCell.swift */,
 				3723942C1AC7956D00819A83 /* SentMemesTableViewCell.swift */,
+				371F00D21ABF7625003C43AB /* Images.xcassets */,
+				371F00C91ABF7625003C43AB /* Supporting Files */,
 			);
 			path = MemeMe;
 			sourceTree = "<group>";
