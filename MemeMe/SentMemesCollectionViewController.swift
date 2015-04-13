@@ -91,6 +91,7 @@ SentMemesCollectionCellDelegate {
     
         // Configure the cell
         cell.memeImageView.image = self.appDelegate.memes[indexPath.row].memedImage
+        cell.backgroundColor = UIColor.blackColor()
         cell.delegate = self
         cell.deleteButton.hidden = editMode ? false : true
        
@@ -115,9 +116,17 @@ SentMemesCollectionCellDelegate {
         return size
     }
     
-    private let insets = UIEdgeInsets(top: 20, left: 5, bottom: 20, right: 5)
+    private let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return insets
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0.0
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 1.0
     }
     
     // MARK: SentMemesCollectionCellDelegate
