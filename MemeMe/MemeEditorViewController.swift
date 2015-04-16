@@ -55,6 +55,12 @@ class MemeEditorViewController: UIViewController {
         shareButton.enabled = false
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         initializeTextFields()
+        
+        if let index = memeIndex {
+            // Editing an existing meme
+            scrollView.setImage(appDelegate.memes[index].sourceImage)
+            shareButton.enabled = true
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -190,6 +196,7 @@ class MemeEditorViewController: UIViewController {
     }
     
     func keyboardWillShow(notification: NSNotification) {
+        println("keyboardWillShow")
         if bottomTextButton.isFirstResponder() {
             if view.frame.origin.y == 0 {
                 // Subtract the height of the keyboard from the y-coordinate of the view
@@ -199,6 +206,7 @@ class MemeEditorViewController: UIViewController {
     }
     
     func keyboardWillHide(notification: NSNotification) {
+        println("keyboardWillHide")
         if bottomTextButton.isFirstResponder() {
             if view.frame.origin.y < 0 {
                 // Add the height of the keyboard to the y-coordinate of the view
@@ -210,7 +218,7 @@ class MemeEditorViewController: UIViewController {
 
 /// Extension to `MemeEditorViewController` that implements the `UITextFieldDelegate` and
 /// `UIImagePickerControllerDelegate` delegate functions
-extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate {
 
     // MARK:  UITextFieldDelegate
 
@@ -250,7 +258,7 @@ extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerD
         return true
     }
     
-    // MARK: - UIImagePickerControllerDelegate
+    // MARK: UIImagePickerControllerDelegate
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -263,6 +271,8 @@ extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerD
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    // MARK: UIScrollViewDelegate
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         println("viewForZoomingInScrollView")
