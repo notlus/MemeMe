@@ -19,12 +19,12 @@ class MemeEditorViewController: UIViewController {
     
     @IBOutlet weak var topTextButton: UITextField!
     @IBOutlet weak var bottomTextButton: UITextField!
-    @IBOutlet weak var sourceImageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var topToolBar: UIToolbar!
     @IBOutlet weak var memeEditorToolBar: UIToolbar!
+    @IBOutlet weak var scrollView: ImageScrollView!
     
     // MARK: - Text Field Data
     
@@ -104,7 +104,7 @@ class MemeEditorViewController: UIViewController {
         activityView.completionHandler = {(activityType, completed: Bool) in
             println("Done with activity, completed=\(completed)")
             if completed {
-                let meme = Meme(top: self.topTextButton.text, bottom: self.bottomTextButton.text, source: self.sourceImageView.image!, memed: memedImage)
+                let meme = Meme(top: self.topTextButton.text, bottom: self.bottomTextButton.text, source: self.scrollView.imageView.image!, memed: memedImage)
                 if let index = self.memeIndex {
                     // Replace an existing meme at index
                     self.appDelegate.memes[index] = meme
@@ -143,7 +143,7 @@ class MemeEditorViewController: UIViewController {
         if let index = memeIndex {
             topTextButton.text = appDelegate.memes[index].topText
             bottomTextButton.text = appDelegate.memes[index].bottomText
-            sourceImageView.image = appDelegate.memes[index].sourceImage
+            scrollView.setImage(appDelegate.memes[index].sourceImage)
         }
         else {
             topTextButton.text = topDefaultText
@@ -208,7 +208,8 @@ class MemeEditorViewController: UIViewController {
     }
 }
 
-/// Extension to `MemeEditorViewController` that implements some delegate functions
+/// Extension to `MemeEditorViewController` that implements the `UITextFieldDelegate` and
+/// `UIImagePickerControllerDelegate` delegate functions
 extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     // MARK:  UITextFieldDelegate
@@ -238,7 +239,7 @@ extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerD
             
             // If the text is different from the default and an image was chosen, enable the
             // share button
-            if textField.text != tempText && sourceImageView.image != nil {
+            if textField.text != tempText && scrollView.imageView.image != nil {
                 shareButton.enabled = true
             }
         }
@@ -253,7 +254,7 @@ extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerD
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            sourceImageView.image = image
+            scrollView.setImage(image)
             shareButton.enabled = true
             dismissViewControllerAnimated(true, completion: nil)
         }
@@ -261,5 +262,11 @@ extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerD
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        println("viewForZoomingInScrollView")
+        let memeScrollView = scrollView as ImageScrollView
+        return memeScrollView.imageView
     }
 }

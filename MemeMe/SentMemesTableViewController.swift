@@ -11,6 +11,7 @@ import UIKit
 class SentMemesTableViewController: UITableViewController {
 
     // MARK: Outlets
+    
     @IBOutlet weak var editButton: UIBarButtonItem!
 
     private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
@@ -81,6 +82,10 @@ class SentMemesTableViewController: UITableViewController {
     }
     
     // MARK: UITableViewDelegate
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 180
+    }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("selected row \(indexPath.row)")
