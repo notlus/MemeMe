@@ -112,7 +112,7 @@ SentMemesCollectionCellDelegate {
     // MARK: UICollectionViewDelegateFlowLayout
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let size = CGSizeMake(120, 120)
+        let size = CGSizeMake(100, 100)
         return size
     }
     
