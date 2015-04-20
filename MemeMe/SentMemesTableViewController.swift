@@ -40,7 +40,7 @@ class SentMemesTableViewController: UITableViewController {
     
     @IBAction func presentMemeEditor(sender: AnyObject) {
         let memeEditor = storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as MemeEditorViewController
-        navigationController!.presentViewController(memeEditor, animated: true, completion: nil)
+        navigationController?.presentViewController(memeEditor, animated: true, completion: nil)
     }
     
     @IBAction func editMeme(sender: AnyObject) {
