@@ -37,7 +37,7 @@ class DetailViewController: UIViewController {
         let memeEditor = storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as MemeEditorViewController
         
         memeEditor.memeIndex = memeIndex
-        navigationController?.presentViewController(memeEditor, animated: true, completion: nil)
+        presentViewController(memeEditor, animated: true, completion: nil)
     }
     
     @IBAction func deleteMeme(sender: AnyObject) {
