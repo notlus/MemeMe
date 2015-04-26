@@ -26,7 +26,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="XoD-WV-acy"/>
                                     <outlet property="imageView" destination="VD1-X4-7j8" id="jJI-MT-3ex"/>
                                 </connections>
                             </scrollView>

@@ -46,6 +46,7 @@ class MemeEditorViewController: UIViewController {
     // MARK: - View Management
     
     override func prefersStatusBarHidden() -> Bool {
+        // No status bar for the meme editor
         return true
     }
     
@@ -54,34 +55,31 @@ class MemeEditorViewController: UIViewController {
 
         shareButton.enabled = false
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
-        initializeTextFields()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         if let index = memeIndex {
             // Editing an existing meme
+            scrollView.contentOffset = CGPointZero
             scrollView.setImage(appDelegate.memes[index].sourceImage)
             shareButton.enabled = true
         }
     }
     
     override func viewWillAppear(animated: Bool) {
-        println("viewWillAppear")
         super.viewWillAppear(animated)
+
+        initializeTextFields()
         subscribeToKeyboardNotifications()
     }
     
     override func viewWillDisappear(animated: Bool) {
-        println("viewWillDisappear")
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
     }
 
-    // MARK: - Navigation
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println("Preparing for segue")
-        let sentMemesViewController = segue.destinationViewController as UITabBarController
-    }
-    
     // MARK: - Actions
     
     @IBAction func chooseImageFromCamera(sender: AnyObject) {
@@ -149,7 +147,6 @@ class MemeEditorViewController: UIViewController {
         if let index = memeIndex {
             topTextButton.text = appDelegate.memes[index].topText
             bottomTextButton.text = appDelegate.memes[index].bottomText
-            scrollView.setImage(appDelegate.memes[index].sourceImage)
         }
         else {
             topTextButton.text = topDefaultText
@@ -218,7 +215,7 @@ class MemeEditorViewController: UIViewController {
 
 /// Extension to `MemeEditorViewController` that implements the `UITextFieldDelegate` and
 /// `UIImagePickerControllerDelegate` delegate functions
-extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate {
+extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     // MARK:  UITextFieldDelegate
 
@@ -263,6 +260,12 @@ extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerD
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             scrollView.setImage(image)
+            if let index = memeIndex {
+                // Update the meme's image at `index`
+                println("Using existing image")
+                appDelegate.memes[index].sourceImage = image
+            }
+            
             shareButton.enabled = true
             dismissViewControllerAnimated(true, completion: nil)
         }
@@ -270,13 +273,5 @@ extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerD
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    // MARK: UIScrollViewDelegate
-    
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
-        println("viewForZoomingInScrollView")
-        let memeScrollView = scrollView as ImageScrollView
-        return memeScrollView.imageView
     }
 }
