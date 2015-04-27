@@ -20,7 +20,7 @@ SentMemesCollectionCellDelegate {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
     
-    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    private let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     // An array to hold the indices of memes that should be deleted
     private var deletionIndices = [Meme]()
@@ -52,7 +52,7 @@ SentMemesCollectionCellDelegate {
     // MARK: IBActions
     
     @IBAction func presentMemeEditor(sender: AnyObject) {
-        let memeEditor = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as MemeEditorViewController
+        let memeEditor = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as! MemeEditorViewController
         self.navigationController!.presentViewController(memeEditor, animated: true, completion: nil)
     }
     
@@ -75,7 +75,7 @@ SentMemesCollectionCellDelegate {
     private func toggleDeleteButton(show: Bool) {
         for var i = 0; i < appDelegate.memes.count; ++i {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
-            let cell = collectionView?.cellForItemAtIndexPath(indexPath) as SentMemesCollectionViewCell
+            let cell = collectionView?.cellForItemAtIndexPath(indexPath) as! SentMemesCollectionViewCell
             cell.deleteButton.hidden = !show
         }
     }
@@ -87,7 +87,7 @@ SentMemesCollectionCellDelegate {
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as SentMemesCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SentMemesCollectionViewCell
     
         // Configure the cell
         cell.memeImageView.image = self.appDelegate.memes[indexPath.row].memedImage
@@ -102,7 +102,7 @@ SentMemesCollectionCellDelegate {
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         // Create the detail view controller
-        let detailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as DetailViewController
+        let detailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as! DetailViewController
 
         // Set the index of the selected table view entry
         detailViewController.memeIndex = indexPath.row

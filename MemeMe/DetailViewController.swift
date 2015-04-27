@@ -16,14 +16,14 @@ class DetailViewController: UIViewController {
     var memeIndex = 0
     
     /// The meme model is in the app delegate
-    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    private let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Create the edit button
         let editButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editMeme")
-        var rightButtons = navigationItem.rightBarButtonItems! as [UIBarButtonItem]
+        var rightButtons = navigationItem.rightBarButtonItems! as! [UIBarButtonItem]
         rightButtons.append(editButton)
         navigationItem.rightBarButtonItems = rightButtons
     }
@@ -34,7 +34,7 @@ class DetailViewController: UIViewController {
     }
 
     func editMeme() {
-        let memeEditor = storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as MemeEditorViewController
+        let memeEditor = storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as! MemeEditorViewController
         
         memeEditor.memeIndex = memeIndex
         presentViewController(memeEditor, animated: true, completion: nil)

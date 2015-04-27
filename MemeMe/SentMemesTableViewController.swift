@@ -14,7 +14,7 @@ class SentMemesTableViewController: UITableViewController {
     
     @IBOutlet weak var editButton: UIBarButtonItem!
 
-    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    private let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     private var selectedIndex: Int?
     private var showMemeEditor = true
     
@@ -40,7 +40,7 @@ class SentMemesTableViewController: UITableViewController {
     // MARK: IBActions
     
     @IBAction func presentMemeEditor(sender: AnyObject) {
-        let memeEditor = storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as MemeEditorViewController
+        let memeEditor = storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as! MemeEditorViewController
         navigationController?.presentViewController(memeEditor, animated: true, completion: nil)
     }
     
@@ -62,7 +62,7 @@ class SentMemesTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("SentMemesCell") as SentMemesTableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("SentMemesCell") as! SentMemesTableViewCell
         var meme = appDelegate.memes[indexPath.row]
         cell.memeImageView!.image = meme.memedImage
         cell.topMemeLabel.text = meme.topText
@@ -93,7 +93,7 @@ class SentMemesTableViewController: UITableViewController {
         selectedIndex = indexPath.row
         
         // Create the detail view controller
-        let detailViewController = storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as DetailViewController
+        let detailViewController = storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as! DetailViewController
         
         // Set the index of the selected table view entry
         detailViewController.memeIndex = indexPath.row

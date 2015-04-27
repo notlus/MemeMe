@@ -10,7 +10,7 @@ import UIKit
 
 /// The view controller for creating and editing memes
 class MemeEditorViewController: UIViewController {
-    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    private let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     /// An optional Int representing the index in the model of the `Meme` to be edited
     var memeIndex: Int?
@@ -105,6 +105,7 @@ class MemeEditorViewController: UIViewController {
         
         // Set the completion handler with a closure that creates a `Meme` instance and stores it in
         // the model
+//        activityView.completionWithItemsHandler = 
         activityView.completionHandler = {(activityType, completed: Bool) in
             println("Done with activity, completed=\(completed)")
             if completed {
@@ -187,7 +188,7 @@ class MemeEditorViewController: UIViewController {
     
     private func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         let userInfo = notification.userInfo
-        let value = userInfo![UIKeyboardFrameEndUserInfoKey] as NSValue
+        let value = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
         return value.CGRectValue().size.height
     }
     
@@ -223,7 +224,7 @@ extension MemeEditorViewController: UITextFieldDelegate, UINavigationControllerD
     }
 
     func textFieldDidEndEditing(textField: UITextField) {
-        if countElements(textField.text) == 0 {
+        if count(textField.text) == 0 {
             // Restore the default text
             if textField.tag == TextType.Top.rawValue {
                 textField.text = topDefaultText
