@@ -162,7 +162,6 @@ class MemeEditorViewController: UIViewController {
         
         UIGraphicsBeginImageContext(view.frame.size)
         view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
-        let context = UIGraphicsGetCurrentContext()
         let memedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
