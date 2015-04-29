@@ -16,7 +16,6 @@ class SentMemesTableViewController: UITableViewController {
 
     private let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     private var selectedIndex: Int?
-    private var showMemeEditor = true
     
     // MARK: View Management
     
@@ -30,10 +29,9 @@ class SentMemesTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
-        if showMemeEditor && appDelegate.memes.isEmpty {
+        if appDelegate.memes.isEmpty {
             // Show the meme editor
             presentMemeEditor(self)
-            showMemeEditor = false
         }
     }
     
@@ -80,6 +78,10 @@ class SentMemesTableViewController: UITableViewController {
         // Restore the edit button
         editButton.title = "Edit"
         editButton.enabled = !appDelegate.memes.isEmpty
+        if appDelegate.memes.isEmpty {
+            // No more memes. Show the meme editor
+            presentMemeEditor(self)
+        }
     }
     
     // MARK: UITableViewDelegate

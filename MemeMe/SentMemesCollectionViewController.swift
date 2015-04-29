@@ -44,16 +44,25 @@ SentMemesCollectionCellDelegate {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.collectionView?.reloadData()
+        collectionView?.reloadData()
         
-        self.editButton.enabled = !self.appDelegate.memes.isEmpty
+        editButton.enabled = !appDelegate.memes.isEmpty
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if appDelegate.memes.isEmpty {
+            // Show the meme editor
+            presentMemeEditor(self)
+        }
+    }
+
     // MARK: IBActions
     
     @IBAction func presentMemeEditor(sender: AnyObject) {
-        let memeEditor = self.storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as! MemeEditorViewController
-        self.navigationController!.presentViewController(memeEditor, animated: true, completion: nil)
+        let memeEditor = storyboard?.instantiateViewControllerWithIdentifier("MemeEditor") as! MemeEditorViewController
+        navigationController!.presentViewController(memeEditor, animated: true, completion: nil)
     }
     
     @IBAction func editMeme(sender: AnyObject) {
@@ -62,13 +71,13 @@ SentMemesCollectionCellDelegate {
         
         toggleDeleteButton(editMode)
 
-        if self.editMode {
+        if editMode {
             editButton.title = "Done"
             addButton.enabled = false
         }
         else {
-            self.editButton.title = "Edit"
-            self.addButton.enabled = true
+            editButton.title = "Edit"
+            addButton.enabled = true
         }
     }
     
@@ -83,14 +92,14 @@ SentMemesCollectionCellDelegate {
     // MARK: UICollectionViewDataSource
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.appDelegate.memes.count
+        return appDelegate.memes.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SentMemesCollectionViewCell
     
         // Configure the cell
-        cell.memeImageView.image = self.appDelegate.memes[indexPath.row].memedImage
+        cell.memeImageView.image = appDelegate.memes[indexPath.row].memedImage
         cell.backgroundColor = UIColor.blackColor()
         cell.delegate = self
         cell.deleteButton.hidden = editMode ? false : true
@@ -102,11 +111,11 @@ SentMemesCollectionCellDelegate {
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         // Create the detail view controller
-        let detailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as! DetailViewController
+        let detailViewController = storyboard!.instantiateViewControllerWithIdentifier("DetailViewController")! as! DetailViewController
 
         // Set the index of the selected table view entry
         detailViewController.memeIndex = indexPath.row
-        self.navigationController!.pushViewController(detailViewController, animated: true)
+        navigationController!.pushViewController(detailViewController, animated: true)
     }
     
     // MARK: UICollectionViewDelegateFlowLayout
@@ -135,6 +144,15 @@ SentMemesCollectionCellDelegate {
             println("Deleting meme at index \(indexPath.row)")
             appDelegate.memes.removeAtIndex(indexPath.row)
             collectionView?.reloadData()
+            
+            if appDelegate.memes.isEmpty {
+                // No more memes. Reset the cell's state and show the meme editor
+                cell.deleteButton.hidden = true
+                editMode = false
+                editButton.title = "Edit"
+                addButton.enabled = true
+                presentMemeEditor(self)
+            }
         }
     }
 }
