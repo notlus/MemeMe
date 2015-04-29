@@ -105,8 +105,7 @@ class MemeEditorViewController: UIViewController {
         
         // Set the completion handler with a closure that creates a `Meme` instance and stores it in
         // the model
-//        activityView.completionWithItemsHandler = 
-        activityView.completionHandler = {(activityType, completed: Bool) in
+        activityView.completionWithItemsHandler = { activity, completed, items, error in
             println("Done with activity, completed=\(completed)")
             if completed {
                 let meme = Meme(top: self.topTextButton.text, bottom: self.bottomTextButton.text, source: self.scrollView.imageView.image!, memed: memedImage)
